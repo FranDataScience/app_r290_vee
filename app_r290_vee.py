@@ -297,8 +297,10 @@ for col in columnas_numericas:
 df = df.dropna(subset=columnas_numericas)
 
 # Calcular variables reales
-df['t_ev'] = np.round(df['pb'].apply(convert_PT_R290), 1)
-df['t_cd'] = np.round(df['pa'].apply(convert_PT_R290), 1)
+#df['t_ev'] = np.round(df['pb'].apply(convert_PT_R290), 1)
+df['t_ev'] = np.round(convert_PT_R290(df['pb']),1)
+#df['t_cd'] = np.round(df['pa'].apply(convert_PT_R290), 1)
+df['t_cd'] = np.round(convert_PT_R290(df['pa']),1)
 df['t_asp'] = np.maximum(df['t_asp'], df['t_ev'])
 df['t_liq'] = np.minimum(df['t_liq'], df['t_cd'])
 df['rec'] = df['t_asp'] - df['t_ev']
