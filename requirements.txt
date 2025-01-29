@@ -9,4 +9,6 @@ streamlit==1.24.0
 streamlit_autorefresh==1.0.1
 joblib==1.2.0
 scikit-learn==1.2.1
+setuptools==65.0.0
+wheel==0.40.0
 
