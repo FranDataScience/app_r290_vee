@@ -93,6 +93,17 @@ def convert_PT_R290(presion):
     temperatura = np.round(PropsSI('T', 'P', (presion+1)*100000, 'Q', 1, 'R290')-273.15, 2)
     return temperatura
 
+# Prueba de la función convert_PT_R290
+st.header("Prueba de Cálculo de Temperatura con CoolProp")
+presion_input = st.number_input("Ingrese la presión relativa (bar)", min_value=0.0, step=0.1, value=5.0)
+    
+if st.button("Calcular Temperatura"):
+    temperatura = convert_PT_R290(presion_input)
+    if temperatura is not None:
+        st.success(f"Temperatura calculada: {temperatura} °C")
+    else:
+        st.error("No se pudo calcular la temperatura debido a un error.")
+
 # Función para calcular la entalpía (kJ/kg) fuera de la campana de saturación, conocidas la presión relativa (bar) y la temperatura (ºC) - R290
 def entalpia_R290_PT(presion, temperatura):
     entalpia = np.round(PropsSI('H', 'P', (presion+1)*100000, 'T', temperatura+273.15, 'R290')/1000, 2)
