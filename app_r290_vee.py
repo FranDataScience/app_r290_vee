@@ -330,8 +330,8 @@ def calcular_variables(df):
     resultados['t_cd'] = models['t_cd'].predict(df[['t_cam', 't_amb']])[0]
 
     # Predicción de rec
-    df['t_ev'] = resultados['t_ev']
-    df['t_cd'] = resultados['t_cd']
+    #df['t_ev'] = resultados['t_ev']
+    #df['t_cd'] = resultados['t_cd']
     resultados['rec'] = models['rec'].predict(df[['t_cam', 't_amb', 't_ev', 't_cd']])[0]
 
     # Predicción de t_des
