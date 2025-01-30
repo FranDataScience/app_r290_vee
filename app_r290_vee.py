@@ -233,10 +233,7 @@ if datos:
     (fecha, pa, pb, t_asp, t_des, t_liq,
      t_amb, t_cam, ta_out_cond, ta_out_evap,
      pot_abs) = datos
-
-     # Mostrar el tipo de pot_abs para depuración
-    st.sidebar.write(f"**Tipo de pot_abs:** {type(pot_abs)}")
-    
+   
     # Intentar convertir pot_abs a número
     try:
         pot_abs_num = float(pot_abs)  # Convertir a flotante
