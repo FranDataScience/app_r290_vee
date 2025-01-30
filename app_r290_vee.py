@@ -335,15 +335,15 @@ def calcular_variables(df):
     resultados['rec'] = models['rec'].predict(df[['t_cam', 't_amb', 't_ev', 't_cd']])[0]
 
     # Predicción de t_des
-    df['rec'] = resultados['rec']
+    #df['rec'] = resultados['rec']
     resultados['t_des'] = models['t_des'].predict(df[['t_ev', 't_cd', 'rec', 't_amb']])[0]
 
     # Predicción de subf
-    df['t_des'] = resultados['t_des']
+    #df['t_des'] = resultados['t_des']
     resultados['subf'] = models['subf'].predict(df[['t_amb', 't_cd', 't_des']])[0]
 
     # Predicción de dta_evap
-    df['subf'] = resultados['subf']
+    #df['subf'] = resultados['subf']
     resultados['dta_evap'] = models['dta_evap'].predict(df[['t_cam', 't_ev']])[0]
 
     # Predicción de dta_cond
