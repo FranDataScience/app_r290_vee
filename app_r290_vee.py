@@ -234,6 +234,16 @@ if datos:
      t_amb, t_cam, ta_out_cond, ta_out_evap,
      pot_abs) = datos
 
+     # Mostrar el tipo de pot_abs para depuración
+    st.sidebar.write(f"**Tipo de pot_abs:** {type(pot_abs)}")
+    
+    # Intentar convertir pot_abs a número
+    try:
+        pot_abs_num = float(pot_abs)  # Convertir a flotante
+        pot_abs_formateado = f"{pot_abs_num:.0f}"  # Redondear sin decimales
+    except ValueError:
+        pot_abs_formateado = "Dato inválido"
+
     # Mostramos en el sidebar
     st.sidebar.write(f"**Fecha último registro:** {fecha}")
     st.sidebar.write(f"**Tª ambiente (°C):** {t_amb}")
@@ -245,7 +255,7 @@ if datos:
     st.sidebar.write(f"**Tª líquido (°C):** {t_liq}")
     st.sidebar.write(f"**Tª aire salida condensador (°C):** {ta_out_cond}")
     st.sidebar.write(f"**Tª aire salida evaporador (°C):** {ta_out_evap}")
-    st.sidebar.write(f"**Potencia absorbida (W):** {pot_abs}")
+    st.sidebar.write(f"**Potencia absorbida (W):** {pot_abs_formateado}")
 else:
     st.sidebar.error("No se encontraron registros para la fecha seleccionada.")
 
@@ -298,9 +308,9 @@ df['dt_ev'] = df['t_cam'] - df['t_ev']
 df['dt_cd'] = df['t_cd'] - df['t_amb']
 df['dta_evap'] = df['t_cam'] - df['ta_out_evap']
 df['dta_cond'] = df['ta_out_cond'] - df['t_amb']
-df['cop'] = cop(df['pb'].iloc[0], df['pa'].iloc[0], df['t_des'].iloc[0], df['t_liq'].iloc[0], df['t_asp'].iloc[0])
+df['cop'] = np.round(cop(df['pb'].iloc[0], df['pa'].iloc[0], df['t_des'].iloc[0], df['t_liq'].iloc[0], df['t_asp'].iloc[0]),1)
 df['ef_comp'] = ef_comp(df['pb'].iloc[0], df['pa'].iloc[0], df['t_des'].iloc[0], df['t_asp'].iloc[0])
-df['pot_frig'] = np.round(df['pot_abs'] * df['cop'], 1)
+df['pot_frig'] = np.round(df['pot_abs'] * df['cop'])
 
 # Eliminar columnas innecesarias
 df.drop(columns=['t_asp', 't_liq','ta_out_cond','ta_out_evap'], inplace=True)
@@ -339,10 +349,10 @@ def calcular_variables(df):
     resultados['dta_cond'] = models['dta_cond'].predict(df[['t_cd', 't_amb']])[0]
 
     # Predicción de pot_abs usando las columnas esperadas por el modelo
-    resultados['pot_abs'] = models['pot_abs'].predict(df[['t_des', 't_ev', 't_cd', 't_amb', 't_cam']])[0]
+    resultados['pot_abs'] = np.round(models['pot_abs'].predict(df[['t_des', 't_ev', 't_cd', 't_amb', 't_cam']])[0])
 
     # Predicción de cop
-    resultados['cop'] = models['cop'].predict(df[['t_ev', 't_cd', 't_des', 'rec']])[0]
+    resultados['cop'] = np.round(models['cop'].predict(df[['t_ev', 't_cd', 't_des', 'rec']])[0],1)
 
     # Predicción de ef_comp
     resultados['ef_comp'] = models['ef_comp'].predict(df[['t_ev', 't_cd', 't_des', 't_amb', 't_cam']])[0]
