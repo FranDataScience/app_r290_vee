@@ -139,7 +139,7 @@ stats = {
     't_des': {'mean': 61.46, 'std': 5},
     'subf': {'mean': 4.48, 'std': 2},
     'dta_evap': {'mean': 2.33, 'std': 1},
-    'dta_cond': {'mean': 5.18, 'std': 2},
+    'dta_cond': {'mean': 5.18, 'std': 1},
     'pot_abs': {'mean': 360.00, 'std': 20},
     'cop': {'mean': 3.85, 'std': 0.40},
     'ef_comp': {'mean': 0.92, 'std': 0.05},
