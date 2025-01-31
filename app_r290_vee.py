@@ -69,7 +69,7 @@ def cargar_modelo(nombre_archivo):
 st.set_page_config(page_title="Detector fallos R290", layout="wide")
 
 # 2. Configuración del auto-refresh cada 30 segundos
-count = st_autorefresh(interval=30000, limit=None, key="fizzbuzzcounter")
+count = st_autorefresh(interval=300000, limit=None, key="fizzbuzzcounter")
 
 st.markdown("""
     <style>
