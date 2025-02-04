@@ -1,4 +1,6 @@
 
+
+
 import gdown
 import streamlit as st
 import pandas as pd
@@ -33,9 +35,9 @@ MODELOS_DRIVE = {
 }
 
 def descargar_modelo(nombre_archivo, file_id):
-    \"""
+    """
     Descarga un modelo desde Google Drive si no está presente localmente.
-    \"""
+    """
     ruta_completa = os.path.join(MODEL_DIR, nombre_archivo)
     if not os.path.exists(ruta_completa):
         url = f"https://drive.google.com/uc?id={file_id}"
@@ -69,7 +71,7 @@ st.set_page_config(page_title="Detector fallos R290", layout="wide")
 # 2. Configuración del auto-refresh cada 30 segundos
 count = st_autorefresh(interval=30000, limit=None, key="fizzbuzzcounter")
 
-st.markdown(\"""
+st.markdown("""
     <style>
     /* Quita o reduce el padding superior en la parte central (modo wide) */
     .main .block-container {
@@ -84,7 +86,7 @@ st.markdown(\"""
         margin: 0rem !important;
     }
     </style>
-\""", unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # Función para calcular la temperatura (ºC) conocida la presión relativa (bar) - R290
 def convert_PT_R290(presion):
@@ -146,11 +148,11 @@ stats = {
 
 # Configuración de la app
 st.markdown(
-    \"""
+    """
     <h1 style='text-align: center; margin-top: 0px;'>
         Detector de fallos Equipo R290
     </h1>
-    \""",
+    """,
     unsafe_allow_html=True
 )
 
@@ -172,11 +174,11 @@ def get_connection():
 def get_all_dates():
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(\"""
+    cursor.execute("""
         SELECT DISTINCT fecha
         FROM incalab
         ORDER BY fecha DESC
-    \""")
+    """)
     dates = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -186,12 +188,12 @@ def get_all_dates():
 def get_data_by_date(selected_date):
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(\"""
+    cursor.execute("""
         SELECT fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
                ta_out_cond, ta_out_evap, pot_abs
         FROM incalab
         WHERE fecha = %s
-    \""", (selected_date,))
+    """, (selected_date,))
     row = cursor.fetchone()
     cursor.close()
     conn.close()
@@ -490,11 +492,11 @@ def get_all_dates():
     conn = get_connection()
     cursor = conn.cursor()
     
-    cursor.execute(\"""
+    cursor.execute("""
         SELECT DISTINCT fecha
         FROM incalab
         ORDER BY fecha ASC
-    \""")
+    """)
     rows = cursor.fetchall()
     cursor.close()
     conn.close()
@@ -510,13 +512,13 @@ def get_last_300_records():
     conn = get_connection()
     cursor = conn.cursor()
     
-    cursor.execute(\"""
+    cursor.execute("""
         SELECT id, fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
                ta_out_cond, ta_out_evap, pot_abs
         FROM incalab
         ORDER BY id DESC
         LIMIT 300
-    \""")
+    """)
     
     rows = cursor.fetchall()
     cursor.close()
@@ -577,12 +579,12 @@ def get_all_records():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
-        \"""
+        """
         SELECT id, fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
                ta_out_cond, ta_out_evap, pot_abs
         FROM incalab
         ORDER BY id ASC
-        \"""
+        """
     )
     rows = cursor.fetchall()
     cursor.close()
@@ -1053,7 +1055,7 @@ if (
     or (df["pot_abs"].iloc[0] < 200)
 ):
     st.markdown(
-        \"""
+        """
         <div style="
             text-align: center;
             font-size: 24px;
@@ -1071,7 +1073,7 @@ if (
                 50% { opacity: 0; }
             }
         </style>
-        \""",
+        """,
         unsafe_allow_html=True
     )
     
@@ -1175,7 +1177,7 @@ else:
         # Mensaje de fallos, sin parpadeo, con fondo rojo claro
         for ff in sorted(fallos_en_N):
             st.markdown(
-                f\""" 
+                f""" 
                 <div style="
                     text-align: center;
                     background-color: #f08080;
@@ -1189,14 +1191,14 @@ else:
                     {ff}
                 </div>
 
-                \""",
+                """,
                 unsafe_allow_html=True
             )
 
     else:
         # Mensaje verde, idéntico, sin animación
         st.markdown(
-            \"""
+            """
             <div style="
                 text-align: center;
                 background-color: #5cb85c;
@@ -1209,16 +1211,16 @@ else:
                 Sistema funcionando correctamente
             </div>
 
-            \""",
+            """,
             unsafe_allow_html=True
         )
 
 
 # Un bloque con 40px de margen vertical
 st.markdown(
-    \"""
+    """
     <div style="margin-top:50px;"></div>
-    \""",
+    """,
     unsafe_allow_html=True
 )
 
