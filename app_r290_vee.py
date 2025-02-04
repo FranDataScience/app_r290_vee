@@ -163,7 +163,7 @@ import streamlit as st
 # Función para establecer la conexión con la base de datos
 def get_connection():
     return pymysql.connect(
-        host="juande.eu",
+        host="188.114.96.5",
         port=3306,
         user="juandeeu_digital",
         password="ContraseN.4",
