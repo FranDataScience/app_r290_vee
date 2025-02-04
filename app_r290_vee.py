@@ -175,9 +175,9 @@ def get_all_dates():
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT DISTINCT fecha
+        SELECT DISTINCT id
         FROM incalab
-        ORDER BY fecha DESC
+        ORDER BY id DESC
     """)
     dates = cursor.fetchall()
     cursor.close()
@@ -189,14 +189,16 @@ def get_data_by_date(selected_date):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
+        SELECT id, fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap, 
                ta_out_cond, ta_out_evap, pot_abs
         FROM incalab
-        WHERE fecha = %s
-    """, (selected_date,))
+        ORDER BY id DESC
+        LIMIT 1
+    """)
     row = cursor.fetchone()
     cursor.close()
     conn.close()
+    return row
 
     # Cambiar nombres de variables ta_in_cond -> t_amb y ta_in_evap -> t_cam
     if row:
@@ -230,7 +232,7 @@ datos = get_data_by_date(selected_date)
 
 if datos:
     # Desempaquetamos la tupla en las variables
-    (fecha, pa, pb, t_asp, t_des, t_liq,
+    (id, fecha, pa, pb, t_asp, t_des, t_liq,
      t_amb, t_cam, ta_out_cond, ta_out_evap,
      pot_abs) = datos
      
