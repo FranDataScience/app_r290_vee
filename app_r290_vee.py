@@ -512,10 +512,10 @@ def get_last_300_records():
     cursor = conn.cursor()
     
     cursor.execute("""
-        SELECT fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
+        SELECT id, fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
                ta_out_cond, ta_out_evap, pot_abs
         FROM incalab
-        ORDER BY fecha DESC
+        ORDER BY id DESC
         LIMIT 300
     """)
     
@@ -578,10 +578,10 @@ def get_all_records():
     cursor = conn.cursor()
     cursor.execute(
         """
-        SELECT fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
+        SELECT id fecha, pa, pb, t_asp, t_des, t_liq, ta_in_cond, ta_in_evap,
                ta_out_cond, ta_out_evap, pot_abs
         FROM incalab
-        ORDER BY fecha ASC
+        ORDER BY id ASC
         """
     )
     rows = cursor.fetchall()
@@ -589,7 +589,7 @@ def get_all_records():
     conn.close()
 
     # Convertir a DataFrame
-    columns = ["fecha", "pa", "pb", "t_asp", "t_des", "t_liq", "t_amb", "t_cam", "ta_out_cond", "ta_out_evap", "pot_abs"]
+    columns = ["id","fecha", "pa", "pb", "t_asp", "t_des", "t_liq", "t_amb", "t_cam", "ta_out_cond", "ta_out_evap", "pot_abs"]
     df = pd.DataFrame(rows, columns=columns)
 
     # Ajustar el formato de las fechas al formato real de la base de datos
