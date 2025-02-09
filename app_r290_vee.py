@@ -421,7 +421,7 @@ if n_sd['t_ev'] < -2*umbral and n_sd['rec'] > 1.5*umbral and n_sd['subf'] > -umb
     
 # Fallo 2: Falta de refrigerante
 # Si t_ev y subf superan el umbral en negativo y rec en positivo
-if n_sd['t_ev'] < -0.4*umbral and n_sd['subf'] < -0.5*umbral and n_sd['rec'] > umbral:
+if n_sd['t_ev'] < -0.4*umbral and n_sd['subf'] < -0.5*umbral and n_sd['rec'] > 1.5*umbral:
     fallos.append("Fallo 2: Falta de refrigerante")
 
 # Fallo 3: Caudal de aire insuficiente en el evaporador / fallo ventilador
@@ -430,10 +430,10 @@ if n_sd['t_ev'] < -0.5*umbral and n_sd['dta_evap'] > umbral:
     fallos.append("Fallo 3: Caudal de aire insuficiente en el evaporador / fallo ventilador")
     
 # Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente en el evaporador / suciedad / escarcha 
-# Si t_ev supera el umbral en negativo
-if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] <= umbral and n_sd['dta_evap'] >= -umbral:
+# Si t_ev supera el umbral en negativo pero subf es normal, y rec normal
+if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] <= umbral and n_sd['dta_evap'] >= -umbral and n_sd['subf'] > -umbral and n_sd['rec'] <= 1.5*umbral:
     fallos.append("Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente en el evaporador / suciedad / escarcha ")
-
+    
 # Fallo 4: Transmisión insuficiente en el evaporador / suciedad / escarcha
 # Si t_ev y tda_evap superan el umbral en negativo
 if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] < -umbral:
@@ -446,7 +446,7 @@ if n_sd['t_ev'] > 0*umbral and n_sd['rec'] < -1.2*umbral:
 
 # Fallo 6: Falta de capacidad o by-pass en compresor
 # Si t_ev supera el umbral en positivo y t_cd en negativo
-if n_sd['t_ev'] > 0.5*umbral and n_sd['t_cd'] < -0.2*umbral:
+if n_sd['t_ev'] > 0.8*umbral and n_sd['t_cd'] < -0.8*umbral:
     fallos.append("Fallo 6: Falta de capacidad o by-pass en compresor")
     
 # Fallo 7: Caudal de aire insuficiente en el condensador / fallo ventilador
@@ -455,8 +455,8 @@ if n_sd['t_cd'] > umbral and n_sd['dta_cond'] > umbral:
     fallos.append("Fallo 7: Caudal de aire insuficiente en el condensador / fallo ventilador")
 
 # Fallo 7 y 8: Caudal de aire insuficiente en el condensador / fallo ventilador + Transmisión insuficiente o suciedad en el condensador
-# Si t_cd supera el umbral en positivo 
-if n_sd['t_cd'] > umbral and n_sd['dta_cond'] <= umbral and n_sd['dta_cond'] >= -umbral:
+# Si t_cd supera el umbral en positivo y subf es normal 
+if n_sd['t_cd'] > umbral and n_sd['dta_cond'] <= umbral and n_sd['dta_cond'] >= -umbral and n_sd['subf'] <= umbral:
     fallos.append("Fallo 7 y 8: Caudal de aire insuficiente en el condensador / fallo ventilador + Transmisión insuficiente o suciedad en el condensador")
     
 # Fallo 8: Transmisión insuficiente o suciedad en el condensador
@@ -1106,22 +1106,22 @@ def detectar_fallos_en_fila(df_fila: pd.DataFrame, umbral: float) -> list:
     # == Mismo set de condiciones que en tu código ==
     if n_sd_local['t_ev'] < -2*umbral and n_sd_local['rec'] > 1.5*umbral and n_sd_local['subf'] > -umbral:
         fallos_local.append("Fallo 1: Obstrucción en línea de líquido / expansión insuficiente / filtro sucio")
-    if n_sd_local['t_ev'] < -0.4*umbral and n_sd_local['subf'] < -0.5*umbral and n_sd_local['rec'] > umbral:
+    if n_sd_local['t_ev'] < -0.4*umbral and n_sd_local['subf'] < -0.5*umbral and n_sd_local['rec'] > 1.5*umbral:
         fallos_local.append("Fallo 2: Falta de refrigerante")
     if n_sd_local['t_ev'] < -0.5*umbral and n_sd_local['dta_evap'] > umbral:
         fallos_local.append("Fallo 3: Caudal de aire insuficiente en el evaporador / fallo ventilador")
-    if n_sd_local['t_ev'] < -umbral and n_sd_local['dta_evap'] <= umbral and n_sd_local['dta_evap'] >= -umbral:
-        fallos_local.append("Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente")
+    if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] <= umbral and n_sd['dta_evap'] >= -umbral and n_sd['subf'] > -umbral and n_sd['rec'] <= 1.5*umbral:
+        fallos_local.append("Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente / escarcha")
     if n_sd_local['t_ev'] < -umbral and n_sd_local['dta_evap'] < -umbral:
         fallos_local.append("Fallo 4: Transmisión insuficiente en el evaporador / suciedad / escarcha")
     if n_sd_local['t_ev'] > 0*umbral and n_sd_local['rec'] < -1.2*umbral:
         fallos_local.append("Fallo 5: Válvula de expansión demasiado abierta")
-    if n_sd_local['t_ev'] > 0.5*umbral and n_sd_local['t_cd'] < -0.2*umbral:
+    if n_sd_local['t_ev'] > 0.8*umbral and n_sd_local['t_cd'] < -0.8*umbral:
         fallos_local.append("Fallo 6: Falta de capacidad o by-pass en compresor")
     if n_sd_local['t_cd'] > umbral and n_sd_local['dta_cond'] > umbral:
         fallos_local.append("Fallo 7: Caudal de aire insuficiente en el condensador / fallo ventilador")
-    if n_sd_local['t_cd'] > umbral and -umbral <= n_sd_local['dta_cond'] <= umbral:
-        fallos_local.append("Fallo 7 y 8: Caudal de aire insuficiente en el condensador + Transmisión insuficiente o suciedad")
+    if n_sd_local['t_cd'] > umbral and -umbral <= n_sd_local['dta_cond'] <= umbral and n_sd['subf'] <= umbral:
+        fallos_local.append("Fallo 7 y 8: Caudal de aire insuficiente en el condensador + Transmisión insuficiente / suciedad")
     if n_sd_local['t_cd'] > umbral and n_sd_local['dta_cond'] < -umbral:
         fallos_local.append("Fallo 8: Transmisión insuficiente o suciedad en el condensador")
     if n_sd_local['t_cd'] > umbral and n_sd_local['subf'] > umbral:
