@@ -156,6 +156,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
+
+
 # Captura de datos de entrada
 import pymysql
 import streamlit as st
@@ -604,6 +607,42 @@ def get_all_records():
 
     return df
 
+# =============================
+# SINÓPTICO
+# =============================
+
+from PIL import Image, ImageDraw, ImageFont
+
+# 1. Carga la imagen
+base = Image.open("sinoptico.png")
+
+# 2. Redimensiona la imagen, p.e. a 400 px de ancho (ajusta la altura conservando la proporción)
+new_width = 800
+aspect_ratio = base.width / base.height
+new_height = int(new_width / aspect_ratio)
+base = base.resize((new_width, new_height))
+
+# 3. Crea el objeto ImageDraw
+draw = ImageDraw.Draw(base)
+
+# 4. Elige fuente y dibuja el texto en las coordenadas que hagan falta
+font = ImageFont.truetype("arial.ttf", 18)
+draw.text((213, 53), str(np.round(df["t_ev"].iloc[0],1)), fill="blue", font=font)
+draw.text((613, 53), str(np.round(df["t_cd"].iloc[0],1)), fill="red", font=font)
+draw.text((223, 310), str(np.round(df["rec"].iloc[0],1)), fill="#00B2B2", font=font)
+draw.text((590, 285), str(np.round(df["subf"].iloc[0],1)), fill="#FFA500", font=font)
+draw.text((97, 386), str(np.round(df["t_cam"].iloc[0],1)), fill="black", font=font)
+draw.text((695, 386), str(np.round(df["t_amb"].iloc[0],1)), fill="black", font=font)
+
+# 5. Muestra la imagen en Streamlit
+col1, col2, col3 = st.columns([1,2,1])
+with col2:
+    st.image(base, width=750)
+
+    
+    
+
+
 # Cargar todos los registros
 df_raw = get_all_records()
 
@@ -720,7 +759,6 @@ else:
 
             # Mostrar la gráfica
             st.pyplot(fig)
-
 
 
 import math
@@ -1249,5 +1287,6 @@ with col2:
     #col1, col2, col3 = st.columns([1, 2, 1])
     #with col2:
         #st.success("Sistema funcionando correctamente")
+        
         
 
