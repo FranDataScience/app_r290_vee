@@ -146,17 +146,17 @@ stats = {
     'pot_frig': {'mean': 1000, 'std': 60},
 }
 
+
+
 # Configuración de la app
 st.markdown(
     """
     <h1 style='text-align: center; margin-top: 0px;'>
-        Detector de fallos Equipo R290
+        Detector de fallos Equipo Intarcon MCV-LD-0009B
     </h1>
     """,
     unsafe_allow_html=True
 )
-
-
 
 
 # Captura de datos de entrada
@@ -215,7 +215,19 @@ def get_data_by_date(selected_date):
 # =============================
 
 # Muestra el logotipo en la parte superior de la barra lateral
-st.sidebar.image("Logo2.png", width=300)  # Ajusta el width que más te convenga
+st.sidebar.image("Logo2.png", width=290)  # Ajusta el width que más te convenga
+
+from PIL import Image
+import streamlit as st
+
+# Carga la imagen
+image = Image.open("mochila.png")
+
+# Aplica estilo para centrar usando columnas en el sidebar
+with st.sidebar:
+    cols = st.columns([1, 2, 1])  # Espaciado izquierda - imagen - derecha
+    with cols[1]:
+        st.image(image, width=150)
 
 st.sidebar.header("Datos recibidos en tiempo real")
 
@@ -626,12 +638,16 @@ base = base.resize((new_width, new_height))
 draw = ImageDraw.Draw(base)
 
 # 4. Elige fuente y dibuja el texto en las coordenadas que hagan falta
-font = ImageFont.truetype("arial.ttf", 18)
-draw.text((213, 53), str(np.round(df["t_ev"].iloc[0],1)), fill="blue", font=font)
+# font = ImageFont.truetype("arial.ttf", 18)
+# font = ImageFont.load_default()
+import matplotlib.font_manager as fm
+font = ImageFont.truetype(fm.findfont("DejaVu Sans"), 18)
+
+draw.text((216, 53), str(np.round(df["t_ev"].iloc[0],1)), fill="blue", font=font)
 draw.text((613, 53), str(np.round(df["t_cd"].iloc[0],1)), fill="red", font=font)
 draw.text((223, 310), str(np.round(df["rec"].iloc[0],1)), fill="#00B2B2", font=font)
 draw.text((590, 285), str(np.round(df["subf"].iloc[0],1)), fill="#FFA500", font=font)
-draw.text((97, 386), str(np.round(df["t_cam"].iloc[0],1)), fill="black", font=font)
+draw.text((105, 386), str(np.round(df["t_cam"].iloc[0],1)), fill="black", font=font)
 draw.text((695, 386), str(np.round(df["t_amb"].iloc[0],1)), fill="black", font=font)
 
 # 5. Muestra la imagen en Streamlit
@@ -640,9 +656,6 @@ with col2:
     st.image(base, width=750)
 
     
-    
-
-
 # Cargar todos los registros
 df_raw = get_all_records()
 
@@ -800,7 +813,8 @@ def crear_indicador_aguja(variable, valor_real, texto, unidad,
     if variable == "t_amb":
         rango_min, rango_max = 0, 60
     elif variable == "t_cam":
-        rango_min, rango_max = -30, 0
+        # rango_min, rango_max = -30, 0
+        rango_min, rango_max = -5, 10
     elif std and (valor_esperado is not None):
         rango_min = valor_esperado - 3 * std
         rango_max = valor_esperado + 3 * std
@@ -934,9 +948,11 @@ all_indicators = [
         "ºC", 
         None,  # valores_esperados.get("t_cam") si lo deseas
         None,  # stats.get("t_cam", {}).get("std") si lo deseas
-        {"verde": (-30, -15), "naranja": (-15, -5), "rojo": (-5, float("inf"))},
+        # {"verde": (-30, -15), "naranja": (-15, -5), "rojo": (-5, float("inf"))},
+        {"verde": (0, 5), "naranja": (5.0001, 8), "rojo": (8.0001, float("inf"))},
         config_principales  # <-- Usa la config principal
     ),
+      
     (
         "t_amb", 
         df["t_amb"].iloc[0], 
@@ -1060,6 +1076,7 @@ for i, (var, val_real, texto, unidad, val_esp, std, rangos, cfg) in enumerate(in
     if var in ["pot_frig", "cop"] and df["cop"].iloc[0] <= 0:
         continue
     
+ 
     # Generar la figura
     fig = crear_indicador_aguja(
         variable=var,
