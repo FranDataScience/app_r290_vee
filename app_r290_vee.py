@@ -69,7 +69,7 @@ def cargar_modelo(nombre_archivo):
 st.set_page_config(page_title="Detector fallos R290", layout="wide")
 
 # 2. Configuración del auto-refresh cada 30 segundos
-count = st_autorefresh(interval=30000, limit=None, key="fizzbuzzcounter")
+count = st_autorefresh(interval=60000, limit=None, key="fizzbuzzcounter")
 
 st.markdown("""
     <style>
@@ -643,10 +643,10 @@ draw = ImageDraw.Draw(base)
 import matplotlib.font_manager as fm
 font = ImageFont.truetype(fm.findfont("DejaVu Sans"), 18)
 
-draw.text((216, 53), str(np.round(df["t_ev"].iloc[0],1)), fill="blue", font=font)
-draw.text((613, 53), str(np.round(df["t_cd"].iloc[0],1)), fill="red", font=font)
+draw.text((210, 53), str(np.round(df["t_ev"].iloc[0],1)), fill="blue", font=font)
+draw.text((610, 53), str(np.round(df["t_cd"].iloc[0],1)), fill="red", font=font)
 draw.text((223, 310), str(np.round(df["rec"].iloc[0],1)), fill="#00B2B2", font=font)
-draw.text((590, 285), str(np.round(df["subf"].iloc[0],1)), fill="#FFA500", font=font)
+draw.text((587, 285), str(np.round(df["subf"].iloc[0],1)), fill="#FFA500", font=font)
 draw.text((105, 386), str(np.round(df["t_cam"].iloc[0],1)), fill="black", font=font)
 draw.text((695, 386), str(np.round(df["t_amb"].iloc[0],1)), fill="black", font=font)
 
