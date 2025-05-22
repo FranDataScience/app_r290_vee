@@ -141,7 +141,7 @@ stats = {
     'dta_evap': {'mean': 2.33, 'std': 1},
     'dta_cond': {'mean': 5.18, 'std': 1},
     'pot_abs': {'mean': 413.00, 'std': 40},
-    'cop': {'mean': 5.32, 'std': 1},
+    'cop': {'mean': 5.32, 'std': 0.5},
     'ef_comp': {'mean': 0.92, 'std': 0.05},
     'pot_frig': {'mean': 2500, 'std': 250},
 }
