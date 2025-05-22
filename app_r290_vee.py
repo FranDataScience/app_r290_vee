@@ -447,7 +447,7 @@ if n_sd['t_ev'] < -0.5*umbral and n_sd['dta_evap'] > umbral:
 # Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente en el evaporador / suciedad / escarcha 
 # Si t_ev supera el umbral en negativo pero subf es normal, y rec normal
 # if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] <= umbral and n_sd['dta_evap'] >= -umbral and n_sd['subf'] > -umbral and n_sd['rec'] <= 1.5*umbral:
-    fallos.append("Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente en el evaporador / suciedad / escarcha ")
+    # fallos.append("Fallo 3 y 4: Caudal de aire insuficiente en el evaporador / fallo ventilador + Transmisión insuficiente en el evaporador / suciedad / escarcha ")
     
 # Fallo 4: Transmisión insuficiente en el evaporador / suciedad / escarcha
 # Si t_ev y tda_evap superan el umbral en negativo
