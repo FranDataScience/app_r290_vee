@@ -350,7 +350,7 @@ def calcular_variables(df):
 
     # Predicción de t_des
     df['rec'] = resultados['rec']
-    resultados['t_des'] = models['t_des'].predict(df[['t_ev', 't_cd', 'rec', 't_amb']])[0]
+    resultados['t_des'] = models['t_des'].predict(df[['t_ev', 't_cd', 'rec', 't_amb']])[0]*1.45
 
     # Predicción de subf
     #df['t_des'] = resultados['t_des']
