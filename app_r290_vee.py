@@ -140,10 +140,10 @@ stats = {
     'subf': {'mean': 4.48, 'std': 2},
     'dta_evap': {'mean': 2.33, 'std': 1},
     'dta_cond': {'mean': 5.18, 'std': 1},
-    'pot_abs': {'mean': 360.00, 'std': 200},
+    'pot_abs': {'mean': 400.00, 'std': 40},
     'cop': {'mean': 3.85, 'std': 0.50},
     'ef_comp': {'mean': 0.92, 'std': 0.05},
-    'pot_frig': {'mean': 1000, 'std': 60},
+    'pot_frig': {'mean': 2500, 'std': 250},
 }
 
 
