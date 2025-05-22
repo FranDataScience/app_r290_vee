@@ -133,15 +133,15 @@ with st.spinner("Cargando modelos..."):
 
 
 stats = {
-    't_ev': {'mean': -18.92, 'std': 2},
+    't_ev': {'mean': -9.81, 'std': 2},
     't_cd': {'mean': 37.98, 'std': 2},
-    'rec': {'mean': 10.21, 'std': 2},
-    't_des': {'mean': 61.46, 'std': 5},
+    'rec': {'mean': 6.33, 'std': 2},
+    't_des': {'mean': 41.65, 'std': 5},
     'subf': {'mean': 4.48, 'std': 2},
     'dta_evap': {'mean': 2.33, 'std': 1},
     'dta_cond': {'mean': 5.18, 'std': 1},
-    'pot_abs': {'mean': 400.00, 'std': 40},
-    'cop': {'mean': 3.85, 'std': 0.50},
+    'pot_abs': {'mean': 413.00, 'std': 40},
+    'cop': {'mean': 5.32, 'std': 1},
     'ef_comp': {'mean': 0.92, 'std': 0.05},
     'pot_frig': {'mean': 2500, 'std': 250},
 }
