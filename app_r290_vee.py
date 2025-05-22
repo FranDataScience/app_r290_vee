@@ -451,7 +451,7 @@ if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] <= umbral and n_sd['dta_evap'] >=
     
 # Fallo 4: Transmisión insuficiente en el evaporador / suciedad / escarcha
 # Si t_ev y tda_evap superan el umbral en negativo
-if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] < -umbral:
+if n_sd['t_ev'] < -umbral and n_sd['dta_evap'] < -umbral and n_sd['rec'] < umbral:
     fallos.append("Fallo 4: Transmisión insuficiente en el evaporador / suciedad / escarcha")
 
 # Fallo 5: Válvula de expansión demasiado abierta
